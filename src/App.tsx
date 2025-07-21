@@ -37,6 +37,10 @@ function App() {
     navigate('/transmissions/today');
   };
 
+  const handleCancelTransmissionForm = () => {
+    navigate('/transmissions/today');
+  };
+
   const handleRowClick = (transmission: Transmission) => {
     setSelectedTransmission(transmission);
     detailsModal.openModal();
@@ -128,6 +132,7 @@ function App() {
           onAddTransmission={handleAddTransmission}
           onSendFile={handleSendFile}
           onRowClick={handleRowClick}
+          onCloseTransmissionForm={handleCancelTransmissionForm}
           onReexecuteTransmission={handleReexecuteTransmission}
           onSaveNewScheduledTask={handleSaveNewScheduledTask}
           onSaveNewEventShippingTask={handleSaveNewEventShippingTask}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import TaskRedirector from './components/utils/TaskRedirector';
 import AuthContainer from './components/auth/AuthContainer';
 import Layout from './components/layout/Layout';
 import TransmissionTable from './components/tables/TransmissionTable';
@@ -35,6 +36,7 @@ interface AppRoutesProps {
   onAddTransmission: () => void;
   onSendFile: () => void;
   onRowClick: (transmission: Transmission) => void;
+  onCloseTransmissionForm: () => void;
   onReexecuteTransmission: (transmission: Transmission) => void;
   onSaveNewScheduledTask: (newTask: ScheduledTask) => void;
   onSaveNewEventShippingTask: (newTask: EventShippingTask) => void;
@@ -57,6 +59,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
   onAddTransmission,
   onSendFile,
   onRowClick,
+  onCloseTransmissionForm,
   onReexecuteTransmission,
   onSaveNewScheduledTask,
   onSaveNewEventShippingTask,
@@ -75,6 +78,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
       {isLoggedIn ? (
         <Route path="/" element={<Layout onLogout={onUserLogout} />}>
           <Route index element={<DashboardView />} />
+          <Route path="transmissions" element={<TaskRedirector />} />
           <Route
             path="transmissions/today"
             element={
@@ -91,7 +95,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
             path="transmissions/today/add"
             element={
               <TransmissionForm
-                onClose={() => {}} // This will be handled by navigate in App.tsx
+                onClose={onCloseTransmissionForm}
                 onSendFile={onSendFile}
               />
             }
@@ -114,6 +118,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
               />
             }
           />
+          <Route path="tasks" element={<TaskRedirector />} />
           <Route
             path="tasks/scheduled"
             element={
@@ -156,6 +161,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
           />
           <Route path="monitorization" element={<MonitorizationView />} />
           <Route path="tools" element={<ToolsView />} />
+          <Route path="configurations" element={<TaskRedirector />} />
           <Route path="configurations/nodes" element={<NodesView />} />
           <Route path="configurations/nodes/:id" element={<NodeDetailsView />} />
           <Route path="configurations/nodes/add" element={<AddNodeView />} />

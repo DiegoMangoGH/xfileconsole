@@ -27,6 +27,7 @@ const AddScheduledTaskForm: React.FC<AddScheduledTaskFormProps> = ({ onSave, onC
   const [selectHour, setSelectHour] = useState('');
   const [runTimeout, setRunTimeout] = useState('');
   const [cipher, setCipher] = useState(false);
+  const [remoteSystem, setRemoteSystem] = useState(''); // New state
 
   // Recurrence states
   const [recurrenceType, setRecurrenceType] = useState<'Daily' | 'Weekly' | 'Monthly' | 'Yearly' | null>(null);
@@ -52,6 +53,7 @@ const AddScheduledTaskForm: React.FC<AddScheduledTaskFormProps> = ({ onSave, onC
         dayOfMonth: recurrenceType === 'Monthly' ? daysOfMonth : undefined,
         dayOfYear: recurrenceType === 'Yearly' ? dayOfYear : undefined,
       } : undefined,
+      remoteSystem, // Add new field
     };
     onSave(newTask);
   };
@@ -150,6 +152,15 @@ const AddScheduledTaskForm: React.FC<AddScheduledTaskFormProps> = ({ onSave, onC
             onChange={setFileFilter}
             label="File Filter"
             placeholder="Select File"
+          />
+        </div>
+
+        <div className="mb-6">
+          <FileInput
+            value={remoteSystem}
+            onChange={setRemoteSystem}
+            label="Remote System (IP Address)"
+            placeholder="e.g., 192.168.1.1"
           />
         </div>
 

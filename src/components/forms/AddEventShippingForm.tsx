@@ -21,6 +21,7 @@ const AddEventShippingForm: React.FC<AddEventShippingFormProps> = ({ onSave, onC
   const [processFilter, setProcessFilter] = useState('TXT, PDF');
   const [runProcess, setRunProcess] = useState('');
   const [processPath, setProcessPath] = useState('');
+  const [remoteSystem, setRemoteSystem] = useState(''); // New state
   const [useParams, setUseParams] = useState(false);
   const [zip, setZip] = useState(false);
   const [params, setParams] = useState([
@@ -37,7 +38,8 @@ const AddEventShippingForm: React.FC<AddEventShippingFormProps> = ({ onSave, onC
       eventType: 'Send',
       localFile,
       processFilter,
-      status: true
+      status: true,
+      remoteSystem, // Add new field
     };
     onSave(newTask);
   };
@@ -123,6 +125,15 @@ const AddEventShippingForm: React.FC<AddEventShippingFormProps> = ({ onSave, onC
             value={processPath}
             onChange={setProcessPath}
             label="Process Path"
+          />
+        </div>
+
+        <div className="mb-6">
+          <FileInput
+            value={remoteSystem}
+            onChange={setRemoteSystem}
+            label="Remote System (IP Address)"
+            placeholder="e.g., 192.168.1.1"
           />
         </div>
 

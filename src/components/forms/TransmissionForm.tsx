@@ -3,6 +3,7 @@ import Button from '../ui/Button';
 import ProviderSelect from '../ui/ProviderSelect';
 import FileInput from '../ui/FileInput';
 import ProviderSummary from '../ui/ProviderSummary';
+import NodeSelect from '../ui/NodeSelect';
 
 interface TransmissionFormProps {
   onClose: () => void;
@@ -14,11 +15,13 @@ const TransmissionForm: React.FC<TransmissionFormProps> = ({ onClose, onSendFile
   const [runTaskFile, setRunTaskFile] = useState('');
   const [localFile, setLocalFile] = useState('00001010.csv');
   const [remoteFile, setRemoteFile] = useState('00001010.csv');
+  const [originNode, setOriginNode] = useState('');
+  const [destinyNode, setDestinyNode] = useState('');
   const [zipEnabled, setZipEnabled] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Sending file with:', { selectedProvider, runTaskFile, localFile, remoteFile, zipEnabled });
+    console.log('Sending file with:', { selectedProvider, runTaskFile, localFile, remoteFile, originNode, destinyNode, zipEnabled });
     onSendFile();
   };
 
@@ -55,7 +58,7 @@ const TransmissionForm: React.FC<TransmissionFormProps> = ({ onClose, onSendFile
               placeholder="00001010.csv"
               required
             />
-            <div className="space-y-4">
+            <div>
               <FileInput
                 value={remoteFile}
                 onChange={setRemoteFile}
@@ -63,19 +66,35 @@ const TransmissionForm: React.FC<TransmissionFormProps> = ({ onClose, onSendFile
                 placeholder="00001010.csv"
                 required
               />
-              <div className="flex items-center">
-                <label htmlFor="zipEnabled" className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    id="zipEnabled"
-                    checked={zipEnabled}
-                    onChange={(e) => setZipEnabled(e.target.checked)}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-700">Zip</span>
-                </label>
-              </div>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <NodeSelect
+              value={originNode}
+              onChange={setOriginNode}
+              label="Origin Node"
+              required
+            />
+            <NodeSelect
+              value={destinyNode}
+              onChange={setDestinyNode}
+              label="Destiny Node"
+              required
+            />
+          </div>
+          
+          <div className="mb-6"> {/* Added mb-6 for spacing */}
+            <label htmlFor="zipEnabled" className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                id="zipEnabled"
+                checked={zipEnabled}
+                onChange={(e) => setZipEnabled(e.target.checked)}
+                className="w-4 h-4 border-gray-300 rounded accent-blue-600 focus:ring-blue-500"
+              />
+              <span className="text-sm text-gray-700">Zip</span>
+            </label>
           </div>
 
           <div className="flex justify-end space-x-4">
